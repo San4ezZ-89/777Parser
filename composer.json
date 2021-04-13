@@ -1,0 +1,24 @@
+{
+  "name": "san4ezz_89/777parser",
+  "description": "Тестовая версия парсера игр.",
+  "keywords": [
+    "San4ezZ_89",
+    "777Parser"
+  ],
+  "homepage": "https://github.com/San4ezZ-89/777Parserr",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "San4ezZ-89",
+      "email": "asti@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "San4ezZ\\Parser777\\": "src/"
+    }
+  }
+}
