@@ -37,15 +37,19 @@ class Matches implements MatchesInterface
 
     public function getMatches(): array
     {
-        $allMatchesCategory = $this->pq->find('.caption');
+        $allMatchesCategory = $this->pq->find('.tournaments-item');
         foreach ($allMatchesCategory as $category) {
             $pqDiv = pq($category);
-            if (in_array(trim($pqDiv->text()), $this->categories)) {
-                $pqAllMathes = pq($pqDiv->parent()->parent()->parent())->find('.tournaments-match');
+            $caption = pq($pqDiv->find('.caption'));
+            $countryName = pq($caption->find('.country-name'))->text();
+            $leagueName = pq($caption->find('.league-name'))->text();
+            $categoryName = $countryName . ' ' . $leagueName;
+            if (in_array($categoryName, $this->categories)) {
+                $pqAllMathes = pq($pqDiv)->find('.tournaments-match');
                 foreach ($pqAllMathes as $pqMatch) {
                     $this->tempArray = array();
                     $this->tempArray['date'] = $this->date;
-                    $this->tempArray['category'] = trim($pqDiv->text());
+                    $this->tempArray['category'] = $categoryName;
                     $this->tempArray['home command'] = trim(pq($pqMatch)->find('.team')->eq(0)->text());
                     $this->tempArray['guest command'] = trim(pq($pqMatch)->find('.team')->eq(1)->text());
                     $this->tempArray['link'] = substr(pq($pqMatch)->find('a')->attr('href'), 1);

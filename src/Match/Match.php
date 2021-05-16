@@ -77,6 +77,7 @@ class Match implements MatchInterface
     {
         $div_find = pq(trim(pq($this->matchPage)->find('.team_link')->eq(0)));
         $img = $div_find->find('img')->attr('src');
+
         return $img;
     }
 
@@ -84,6 +85,7 @@ class Match implements MatchInterface
     {
         $div_find = pq(trim(pq($this->matchPage)->find('.team_link')->eq(1)));
         $img = $div_find->find('img')->attr('src');
+
         return $img;
     }
 
