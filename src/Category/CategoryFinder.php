@@ -25,10 +25,20 @@ class CategoryFinder implements CategoryFinderInterface
     public function findAllMatchCategory(): array
     {
         $allMatchesCategory = $this->pq->find('.caption');
+
+//        $pqDiv = pq($category);
+//        $caption = pq($pqDiv->find('.caption'));
+
+
         foreach ($allMatchesCategory as $category) {
             $pqLink = pq($category);
-            if (!in_array($pqLink->text(), $this->allCountryTag)) {
-                $this->allCountryTag[trim($pqLink->text())] = trim($pqLink->text());
+
+            $countryName = pq($pqLink->find('.country-name'))->text();
+            $leagueName = pq($pqLink->find('.league-name'))->text();
+            $categoryName = $countryName . ' ' . $leagueName;
+
+            if (!in_array($categoryName, $this->allCountryTag)) {
+                $this->allCountryTag[$categoryName] = $categoryName;
             }
         }
         return $this->allCountryTag;
