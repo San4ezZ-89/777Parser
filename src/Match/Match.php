@@ -50,22 +50,22 @@ class Match implements MatchInterface
 
     private function getHomeCommand(): string
     {
-        return trim(pq($this->matchPage)->find('.team_link')->eq(0)->text());
+        return trim(pq($this->matchPage)->find('.team .home')->eq(0)->text());
     }
 
     private function getGuestCommand(): string
     {
-        return trim(pq($this->matchPage)->find('.team_link')->eq(1)->text());
+        return trim(pq($this->matchPage)->find('.team .away')->eq(0)->text());
     }
 
     private function getScoreHomeCommand(): string
     {
-        return trim(pq($this->matchPage)->find('.scoreHost')->text());
+        return trim(pq($this->matchPage)->find('.scoreHost')->eq(0)->text());
     }
 
     private function getScoreGuestCommand(): string
     {
-        return trim(pq($this->matchPage)->find('.scoreGuest')->text());
+        return trim(pq($this->matchPage)->find('.scoreGuest')->eq(0)->text());
     }
 
     private function getStatus(): string
@@ -75,25 +75,26 @@ class Match implements MatchInterface
 
     private function getHomeCommandImage(): string
     {
-        $div_find = pq(trim(pq($this->matchPage)->find('.team_link')->eq(0)));
-        $img = $div_find->find('img')->attr('src');
+        $div_find = pq(trim(pq($this->matchPage)->find('.wrapper_team')));
+        $img = $div_find->find('img')->eq(0)->attr('data-lazy-img');
 
         return $img;
     }
 
     private function getGuestCommandImage(): string
     {
-        $div_find = pq(trim(pq($this->matchPage)->find('.team_link')->eq(1)));
-        $img = $div_find->find('img')->attr('src');
+        $div_find = pq(trim(pq($this->matchPage)->find('.wrapper_team')));
+        $img = $div_find->find('img')->eq(2)->attr('data-lazy-img');
 
         return $img;
     }
 
     private function getOdds(): array
     {
-        $this->odds['home'] = trim(pq($this->matchPage)->find('.odd-source-onexbet')->find('.odd-1')->text());
-        $this->odds['x'] = trim(pq($this->matchPage)->find('.odd-source-onexbet')->find('.odd-2')->text());
-        $this->odds['guest'] = trim(pq($this->matchPage)->find('.odd-source-onexbet')->find('.odd-3')->text());
+        $this->odds['home'] = trim(pq($this->matchPage)->find('.odd-source-onexbet')->eq(1)->text());
+        $this->odds['x'] = trim(pq($this->matchPage)->find('.odd-source-onexbet')->eq(2)->text());
+        $this->odds['guest'] = trim(pq($this->matchPage)->find('.odd-source-onexbet')->eq(3)->text());
+//        $this->odds['guest'] = trim(pq($this->matchPage)->find('.odd-source-onexbet')->find('.odd-3')->text()); //старый вариант с поиском по селектору, использовать как запасной
 
         return $this->odds;
     }
